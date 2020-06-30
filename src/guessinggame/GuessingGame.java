@@ -3,7 +3,9 @@ package guessinggame;
 import java.util.Random;
 
 /**
- *
+ * A class which implements a 'binary search'-esque algorithm to guess a 
+ * randomly generated number
+ * 
  * @author Ryan
  */
 public class GuessingGame 
@@ -13,6 +15,11 @@ public class GuessingGame
     private static int myNumber;
     private static int guessedNumber;
     
+    /**
+     * Main test method
+     * 
+     * @param args 
+     */
     public static void main(String[] args)
     {
         myNumber = rand.nextInt(UPPER_LIMIT);   //range: 0 and 100
@@ -21,12 +28,21 @@ public class GuessingGame
         System.out.println("\n\nYou took " + game(0, UPPER_LIMIT-1) + " guesses!");
     }
     
+    /**
+     * The algorithm, which returns the number of guesses taken, and which 
+     * determines the next number to guess. Average number of guesses is 
+     * between 5 and 8 guesses
+     * 
+     * @param lowest number
+     * @param highest number
+     * @return 
+     */
     public static int game(int lowest, int highest)
     {
         int numGuesses = 0;
         boolean guessed = false;
     
-        guessedNumber = (highest-lowest)/2;
+        guessedNumber = (highest-lowest)/2; //set initially as 50
         while (!guessed)
         {
             System.out.print("Guess " + (numGuesses+1) + ": " + guessedNumber);
@@ -34,7 +50,8 @@ public class GuessingGame
             if (guessedNumber < myNumber)
             {
                 System.out.print(" Guess is lower than my number\n");
-                lowest = guessedNumber;
+                lowest = guessedNumber; //set lowest number in range
+                //increment by half the range:
                 guessedNumber += (highest-lowest)/2;
             }
             else if (guessedNumber == myNumber)
@@ -42,7 +59,8 @@ public class GuessingGame
             else
             {
                 System.out.print(" Guess is higher than my number\n");
-                highest = guessedNumber;
+                highest = guessedNumber; //set highest number in range
+                //decrement by half the range:
                 guessedNumber -= (highest-lowest)/2;
             }
             ++numGuesses;
